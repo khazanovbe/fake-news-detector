@@ -12,8 +12,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import itertools
 import pickle
+import math
 
-NUMBER_OF_ROWS = 2000
+NUMBER_OF_ROWS = 35000
 
 def plotConfusionMatrix(cm, classes,
                           normalize=False,
@@ -89,7 +90,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = LogisticRegression(random_state=0).fit(X_train, y_train)
 # model = PassiveAggressiveClassifier(max_iter=1000).fit(X_train, y_train)
 prediction = model.predict(X_test)
-print(metrics.accuracy_score(y_test, prediction))
+print("Accuracy: ",metrics.accuracy_score(y_test, prediction))
+print("RMSE: ",math.sqrt(metrics.mean_squared_error(y_test,prediction)))
 
 cm = metrics.confusion_matrix(y_test, prediction)
 plotConfusionMatrix(cm, classes=['FAKE', 'REAL'])
